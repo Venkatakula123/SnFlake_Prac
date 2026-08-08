@@ -67,7 +67,7 @@ FROM @mdb.e_stg.ps3
 (
     FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1 FIELD_DELIMITER = ','),
     FILES       = ('Loan_payments_data.csv')
-); */
+) */
 
 // Transforming Data while loading. and  Case 2: load only required fields
 CREATE OR REPLACE TABLE MDB.PUBLIC.ORDERS_EX (
