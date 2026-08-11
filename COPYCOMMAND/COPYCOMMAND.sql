@@ -229,6 +229,8 @@ Alter file format mdb.ffmt.csvpf set  null_if = ('NULL','null');
 Alter file format mdb.ffmt.csvpf set empty_field_as_null = true;
 
 describe file format mdb.ffmt.csvpf;
+create or replace file format mdb.ffmt.csvpf_1 type = csv;
+describe file format mdb.ffmt.csvpf_1;
 
 use database mdb;
 use schema e_stg;
@@ -406,67 +408,25 @@ SIZE_LIMIT = 5;
 
 --LOAD_UNCERTAIN_FILES
 
---Semi-Structured Data
-CREATE OR REPLACE FILE FORMAT MDB.FFMT.json_format
-    TYPE = JSON;
+use schema E_STG;
+show stages;
 
-Show storage integrations;
+LIst @STGFAIL;
 
-Create or replace stage MDB.E_STG.j_stg storage_integration = es3
-url = 's3://allff/json/';
+CREATE OR REPLACE TABLE  MDB.PUBLIC.ORDERS_FAIL (
+    ORDER_ID VARCHAR(30),
+    AMOUNT VARCHAR(30),
+    PROFIT INT,
+    QUANTITY INT,
+    CATEGORY VARCHAR(30),
+    SUBCATEGORY VARCHAR(30));
 
-describe stage j_stg;
+COPY INTO MDB.PUBLIC.ORDERS_FAIL from @STGFAIL
+File_Format = (format_name = MDB.FFMT.csvf)
+pattern = '.*Order.*'
+validation_mode = RETURN_ERRORS;
 
-List @j_stg;
+create or replace table MDB.PUBLIC.COPY_ERROR as 
+Select * from table(result_scan('01c650f8-0302-b7fb-001b-fc47009310b6')); 
 
-Select $1 from @j_stg/pets_data.json;
-
-Select  $1:Name::VARCHAR as NAME,
-        $1:Gender::varchar as GENDER from @j_stg/pets_data.json
-(FILE_FORMAT =>  MDB.FFMT.json_format);
-
-SELECT * FROM TABLE(
-                    INFER_SCHEMA(LOCATION=>'@j_stg' ,
-                  FILE_FORMAT => 'MDB.FFMT.json_format' ,
-                  FILES => ('socialmedia.json')
-                )
-            );
-
-CREATE OR REPLACE TRANSIENT TABLE public.SOCIAL_MEDIA USING TEMPLATE 
-(
-    SELECT ARRAY_AGG(OBJECT_CONSTRUCT(*)) FROM TABLE(
-    INFER_SCHEMA(LOCATION=>'@j_stg'
-                 , FILE_FORMAT => 'MDB.FFMT.json_format'
-                 , FILES => ('socialmedia.json')
-                )
-            )
-        );
--- The above won't work exactly
-describe table public.SOCIAL_MEDIA;
-
-CREATE OR REPLACE TABLE MDB.public.PETS_DATA_JSON_RAW(raw_file variant);
-
-COPY INTO MDB.PUBLIC.PETS_DATA_JSON_RAW from @MDB.E_STG.j_stg
-    FILE_FORMAT = (FORMAT_NAME = MDB.FFMT.json_format)
-    FILES = ('pets_data.json');
-
-Select * from MDB.PUBLIC.PETS_DATA_JSON_RAW;
-
---Querying the JSON Data now
-Select  raw_file:Address:City as CITY,
-        raw_file:Address:"House Number" as HNO,
-        raw_file:Address:State as STATE,
-        raw_file:DOB as DOB, 
-        raw_file:Gender as GENDER,
-        raw_file:Name as NAME,
-        raw_file:Pets[0] as PET_1,
-        raw_file:Pets[1] as PET_2,
-        raw_file:Phone:Mobile as MOBILE,
-        raw_file:Phone:Work as WORK  from MDB.PUBLIC.PETS_DATA_JSON_RAW;
-
-
-
-
-
-
-
+Select * from MDB.PUBLIC.COPY_ERROR;
