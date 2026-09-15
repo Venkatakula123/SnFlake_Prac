@@ -1,0 +1,9 @@
+--https://docs.snowflake.com/en/user-guide/tutorials/create-your-first-iceberg-table#introduction
+
+
+SET current_wh_name = (SELECT CURRENT_WAREHOUSE());
+
+CREATE OR REPLACE WAREHOUSE my_wh
+  WAREHOUSE_SIZE = 'XSMALL';
+
+USE WAREHOUSE IDENTIFIER($current_wh_name);
