@@ -1,3 +1,6 @@
+Use database MOVIELENS;
+use schema RAW;
+
 CREATE STORAGE INTEGRATION my_s3_integration
     TYPE = EXTERNAL_STAGE
     STORAGE_PROVIDER = S3
@@ -603,3 +606,103 @@ values
      '2026-09-01 09:30:00', '2026-09-02 11:00:00');
 
      Select * from dbt_vakula.dim_customers_bad;
+
+create or replace table RAW.ORDERS_STG (
+    order_id           number(38,0) not null,
+    customer_id        number(38,0) not null,
+    order_status       varchar(30) not null,
+    order_amount       number(12,2) not null,
+    created_at         timestamp_ntz not null,
+    updated_at         timestamp_ntz not null,
+    source_loaded_at   timestamp_ntz not null default current_timestamp(),
+    is_deleted         boolean not null default false
+);
+
+insert into RAW.ORDERS_STG
+(
+    order_id,
+    customer_id,
+    order_status,
+    order_amount,
+    created_at,
+    updated_at,
+    source_loaded_at,
+    is_deleted
+)
+values
+    (1001, 101, 'PLACED',    120.00, '2026-01-01 09:00:00', '2026-01-01 09:00:00', current_timestamp(), false),
+    (1002, 102, 'PLACED',     75.50, '2026-01-01 10:00:00', '2026-01-01 10:00:00', current_timestamp(), false),
+    (1003, 103, 'SHIPPED',   210.00, '2026-01-02 11:00:00', '2026-01-02 12:00:00', current_timestamp(), false),
+    (1004, 101, 'DELIVERED',  50.00, '2026-01-03 13:00:00', '2026-01-03 15:00:00', current_timestamp(), false),
+    (1005, 104, 'PLACED',     99.99, '2026-01-03 16:00:00', '2026-01-03 16:00:00', current_timestamp(), false);
+
+select * 
+from RAW.ORDERS_STG
+order by order_id;
+
+insert into RAW.ORDERS_STG
+(
+order_id, customer_id, order_status, order_amount,
+created_at, updated_at, source_loaded_at, is_deleted
+)
+values
+(1006, 105, 'PLACED', 150.00,
+'2026-01-04 09:00:00', '2026-01-04 09:00:00',
+current_timestamp(), false),
+(1007, 106, 'PLACED', 89.00,
+'2026-01-04 10:00:00', '2026-01-04 10:00:00',
+current_timestamp(), false);
+
+--S:B Update Existing Record
+--A source system changes order 1002 from PLACED to SHIPPED.
+insert into RAW.ORDERS_STG
+(
+order_id, customer_id, order_status, order_amount,
+created_at, updated_at, source_loaded_at, is_deleted
+)
+values
+(1002, 102, 'SHIPPED', 75.50,
+'2026-01-01 10:00:00', '2026-01-04 12:30:00',
+current_timestamp(), false);
+--Expected: Only one target row remains for ORDER_ID = 1002, with ORDER_STATUS = 'SHIPPED'.
+
+select * from STG.STG_ORDERS_INCREMENTAL where order_id = 1002;
+
+--S:C LATE ARRIVING RECORD
+insert into RAW.ORDERS_STG
+(
+order_id, customer_id, order_status, order_amount,
+created_at, updated_at, source_loaded_at, is_deleted
+)
+values
+(1008, 107, 'DELIVERED', 300.00,
+'2026-01-02 08:00:00', '2026-01-04 13:00:00',
+current_timestamp(), false);
+
+insert into RAW.ORDERS_STG
+(
+order_id, customer_id, order_status, order_amount,
+created_at, updated_at, source_loaded_at, is_deleted
+)
+values
+(1009, 108, 'PLACED', 40.00,
+'2026-01-05 08:00:00', '2026-01-05 08:00:00',
+'2026-01-05 08:05:00', false),
+(1009, 108, 'CONFIRMED', 40.00,
+'2026-01-05 08:00:00', '2026-01-05 08:10:00',
+'2026-01-05 08:15:00', false);
+
+Select * from STG.stg_orders_incremental;
+
+
+
+--SS
+insert into RAW.ORDERS_STG
+(
+order_id, customer_id, order_status, order_amount,
+created_at, updated_at, source_loaded_at, is_deleted
+)
+values
+(1004, 101, 'CANCELLED', 50.00,
+'2026-01-03 13:00:00', '2026-01-05 14:00:00',
+current_timestamp(), true);
