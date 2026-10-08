@@ -288,3 +288,31 @@ VALUES
 (8,  'Tom and Huck',           'Adventure|Children',       1995, 3.0, '2026-09-01 09:35:00'),
 (9,  'Sudden Death',           'Action',                   1995, 3.5, '2026-09-01 09:40:00'),
 (10, 'GoldenEye',              'Action|Adventure|Thriller',1995, 4.0, '2026-09-01 09:45:00');
+
+Select current_database();
+select CURRENT_SCHEMA();
+
+Select * from MOVIELENS.RAW.RAW_FILMS;
+
+show schemas;
+
+use database MOVIELENS;
+use schema public;
+use role accountadmin;
+CREATE OR REPLACE STREAM public.filmstream ON TABLE RAW.RAW_FILMS ;
+
+INSERT INTO MOVIELENS.RAW.RAW_FILMS
+(
+    MOVIE_ID,
+    TITLE,
+    GENRES,
+    RELEASE_YEAR,
+    RATING,
+    UPDATED_AT
+)
+VALUES
+(11,  'Toy Story2',              'Animation|Comedy',        2023, 4.0, '2026-10-05 09:00:00');
+
+Select * from public.filmstream;
+
+show streams;
