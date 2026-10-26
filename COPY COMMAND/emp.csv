@@ -1,0 +1,21 @@
+EmpID,FirstName,LastName,Gender,Department,JobTitle,Salary,HireDate,City,Email
+1001,Rajesh,Kumar,Male,IT,Data Engineer,95000,2021-03-15,Hyderabad,rajesh.kumar@example.com
+1002,Priya,Sharma,Female,HR,HR Specialist,65000,2020-07-21,Bangalore,priya.sharma@example.com
+1003,Amit,Verma,Male,Finance,Financial Analyst,78000,2019-11-10,Pune,amit.verma@example.com
+1004,Sneha,Reddy,Female,IT,Software Engineer,92000,2022-01-05,Hyderabad,sneha.reddy@example.com
+1005,Vikram,Singh,Male,Sales,Sales Manager,88000,2018-09-18,Delhi,vikram.singh@example.com
+1006,Anjali,Patel,Female,Marketing,Marketing Analyst,72000,2021-06-28,Mumbai,anjali.patel@example.com
+1007,Kiran,Rao,Male,IT,Cloud Engineer,102000,2020-12-14,Chennai,kiran.rao@example.com
+1008,Meera,Iyer,Female,Finance,Accountant,69000,2019-04-23,Bangalore,meera.iyer@example.com
+1009,Rohit,Gupta,Male,Operations,Operations Manager,85000,2017-08-30,Noida,rohit.gupta@example.com
+1010,Divya,Nair,Female,IT,Data Analyst,81000,2022-05-16,Kochi,divya.nair@example.com
+1011,Arjun,Menon,Male,IT,DBA,98000,2021-02-01,Hyderabad,arjun.menon@example.com
+1012,Kavya,Joshi,Female,HR,Recruiter,62000,2023-01-11,Pune,kavya.joshi@example.com
+1013,Suresh,Yadav,Male,Sales,Account Executive,73000,2020-10-19,Jaipur,suresh.yadav@example.com
+1014,Pooja,Agarwal,Female,Marketing,Content Strategist,70000,2021-09-07,Delhi,pooja.agarwal@example.com
+1015,Naveen,Chandra,Male,IT,Snowflake Developer,110000,2019-06-25,Hyderabad,naveen.chandra@example.com
+1016,Lakshmi,Devi,Female,Finance,Senior Accountant,82000,2018-12-03,Chennai,lakshmi.devi@example.com
+1017,Manoj,Mishra,Male,Operations,Process Lead,79000,2022-03-09,Lucknow,manoj.mishra@example.com
+1018,Neha,Saxena,Female,IT,BI Developer,94000,2020-08-17,Gurgaon,neha.saxena@example.com
+1019,Rakesh,Naidu,Male,IT,Data Architect,125000,2017-05-22,Hyderabad,rakesh.naidu@example.com
+1020,Swathi,Krishna,Female,Sales,Business Development Executive,76000,2023-04-13,Visakhapatnam,swathi.krishna@example.com

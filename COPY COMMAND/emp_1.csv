@@ -1,0 +1,16 @@
+EmpID,FirstName,LastName,Gender,Department,JobTitle,Salary,HireDate,City,Email
+1037,Harsha,Reddy,Male,IT,Data Engineer,EightyFiveThousand,2022-05-15,Hyderabad,harsha.reddy@example.com
+1038,Anitha,Sharma,Female,Finance,Accountant,75000,31-02-2023,Bangalore,anitha.sharma@example.com
+1039,Raj,Patel,Male,Sales,Sales Executive,68000,2023/13/10,Mumbai,raj.patel@example.com
+1040,Pooja,Verma,Female,HR,Recruiter,70000,202A-04-15,Pune,pooja.verma@example.com
+1041,Kiran,Kumar,Male,IT,Developer,90K,2022-07-20,Chennai,kiran.kumar@example.com
+1042,Swathi,Rao,Female,Marketing,Marketing Analyst,75000,15-Mar-202X,Hyderabad,swathi.rao@example.com
+1043,Suresh,Yadav,Male,Operations,Process Lead,NULLVALUE,2021-09-12,Delhi,suresh.yadav@example.com
+1044,Divya,Nair,Female,IT,Cloud Engineer,95000,2022-02-29,Kochi,divya.nair@example.com
+1045,Rakesh,Gupta,Male,Finance,Analyst,75,000,2020-11-08,Noida,rakesh.gupta@example.com
+1046,Meena,Iyer,Female,HR,Manager,ABC123,2021-12-15,Bangalore,meena.iyer@example.com
+1047,Naveen,Reddy,Male,IT,Snowflake Developer,120000,2023-00-15,Hyderabad,naveen.reddy@example.com
+1048,Kavya,Patel,Female,Sales,Sales Manager,85000,2024-04-31,Mumbai,kavya.patel@example.com
+1049,Ajay,Singh,Male,IT,Data Architect,1.2L,2020-06-10,Delhi,ajay.singh@example.com
+1050,Neha,Agarwal,Female,Finance,Accountant,70000,20th Jan 2023,Pune,neha.agarwal@example.com
+1051,Arun,Naidu,Male,Operations,Supervisor,SeventyFiveK,2023-14-01,Chennai,arun.naidu@example.com
