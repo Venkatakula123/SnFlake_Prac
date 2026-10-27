@@ -29,4 +29,8 @@ Select * from mdb.public.Err_Rec;
 -- When we use this COPY Option validation_mode = RETURN_ALL_ERRORS this time only result_scan(last_query_id()) only works, But when you use ON_ERROR = CONTINUE that time 
 --table(validate(EMPS, job_id = '_last')) works
 
+--Loading the Error Records to the stage
+COPY INTO @MDB.I_STG.CSV/Error from mdb.public.Err_Rec 
+file_format = (type = CSV skip_header = 1 field_delimiter = ',' compression = None)
+SINGLE = TRUE;
 
